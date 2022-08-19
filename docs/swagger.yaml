@@ -1,0 +1,375 @@
+basePath: /
+definitions:
+  domain.Book:
+    properties:
+      id:
+        type: integer
+      publish_date:
+        type: string
+      rating:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  domain.BookInput:
+    properties:
+      publish_date:
+        type: string
+      rating:
+        type: integer
+      title:
+        type: string
+    type: object
+  domain.SignInInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  domain.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  http.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  http.getAllBooksResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Book'
+        type: array
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for TodoList Application
+  title: Todo App API
+  version: "1.0"
+paths:
+  /api/books:
+    get:
+      consumes:
+      - application/json
+      description: gets all books
+      operationId: get-all-books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getAllBooksResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get AllBooks
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: create Book
+      operationId: create-book
+      parameters:
+      - description: book info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.BookInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Book
+      tags:
+      - books
+  /api/books/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete Book
+      operationId: delete-book
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Book
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: get list by id
+      operationId: get-book-by-id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Book By Id
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: update Book
+      operationId: update-book
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Book
+      tags:
+      - books
+  /api/books/user:
+    get:
+      consumes:
+      - application/json
+      description: get books by user
+      operationId: get-book-by-user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getAllBooksResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get BooksUser
+      tags:
+      - books
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: SignIn
+      tags:
+      - auth
+  /auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: create account
+      operationId: create-account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: SignUp
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
